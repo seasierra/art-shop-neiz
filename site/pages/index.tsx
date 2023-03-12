@@ -8,6 +8,7 @@ import Section from '@components/ui/Section'
 import uploads from '@lib/uploads'
 import Gallery from '@components/common/Gallery'
 import generateBlurPlaceholder from '@lib/uploads/generateBlurPlaceholder'
+import AdaptiveVideoPlayer from '@components/common/AdaptiveVideoPlayer'
 
 export async function getStaticProps({
   preview,
@@ -79,7 +80,8 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Grid variant="filled">
+      <AdaptiveVideoPlayer videoSrc="media/main_ibrzrf" />
+      {/* <Grid variant="filled">
         {products.slice(0, 3).map((product: any, i: number) => (
           <ProductCard
             key={product.id}
@@ -92,7 +94,7 @@ export default function Home({
             }}
           />
         ))}
-      </Grid>
+      </Grid> */}
       <Section.Heading title="works" />
       {showcases.map(({ category, cases }) => (
         <Section.Showcase key={category} title={category}>

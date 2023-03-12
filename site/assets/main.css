@@ -5,7 +5,3 @@
 @import './components.css';
 
 @tailwind utilities;
-
-@import './static/css/style.css';
-@import './static/css/plugins.css';
-@import './static/css/patches.css';
