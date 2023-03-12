@@ -41,6 +41,7 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
                 return (
                   <figure>
                     <a
+                      className="relative block h-full w-full aspect-[3/4]"
                       // href={require(`@assets/image/${id}/${idx}.jpg`).default}
                       data-glightbox={`title:${title};data-gallery:${galleryId}`}
                       onClick={async (event) => {
@@ -52,12 +53,9 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
                       }}
                     >
                       <CldImage
-                        placeholder="blur"
                         loading={isActive || isNext ? 'eager' : 'lazy'}
                         alt={title}
                         src={`assets/${slide}`}
-                        width={768}
-                        height={600}
                         fill
                         sizes="sm: 100vw, md; 100vw, xl: 100vw"
                       />
