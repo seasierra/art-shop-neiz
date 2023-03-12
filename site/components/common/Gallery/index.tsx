@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Pagination, Navigation } from 'swiper'
+import 'swiper/swiper.css'
 import { SwiperSlide } from 'swiper/react'
 import dynamic from 'next/dynamic'
 import { CldImage } from 'next-cloudinary'
