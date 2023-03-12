@@ -7,6 +7,7 @@ import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Section from '@components/ui/Section'
 import uploads from '@lib/uploads'
 import Gallery from '@components/common/Gallery'
+import generateBlurPlaceholder from '@lib/uploads/generateBlurPlaceholder'
 
 export async function getStaticProps({
   preview,
@@ -27,12 +28,46 @@ export async function getStaticProps({
   const { pages } = await pagesPromise
   const { categories, brands } = await siteInfoPromise
 
+  const assets = uploads.showcase.flatMap(({ cases }) =>
+    cases.flatMap(({ slides }) => slides.map(([assetName]) => assetName))
+  )
+
+  const blurs = assets.map(async (assetName) => ({
+    assetName,
+    // @ts-ignore
+    blurDataUrl: await generateBlurPlaceholder({
+      public_id: assetName,
+      format: 'jpg',
+    }),
+  }))
+
+  const obj = (await Promise.all(blurs)).reduce(
+    (acc, { assetName, blurDataUrl }) =>
+      Object.assign(acc, { [assetName]: blurDataUrl }),
+    {}
+  )
+
+  const showcases = uploads.showcase.map(({ category, cases }) => ({
+    category,
+    cases: cases.map(({ case: caseTitle, slides }) => ({
+      caseTitle,
+      slides: slides.map(([assetName, [width, height]]) => ({
+        assetName,
+        size: [width, height],
+        alt: `${caseTitle}_${assetName}`,
+        // @ts-ignore
+        blurDataUrl: obj[assetName],
+      })),
+    })),
+  }))
+
   return {
     props: {
       products,
       categories,
       brands,
       pages,
+      showcases,
     },
     revalidate: 60,
   }
@@ -40,6 +75,7 @@ export async function getStaticProps({
 
 export default function Home({
   products,
+  showcases,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -58,14 +94,14 @@ export default function Home({
         ))}
       </Grid>
       <Section.Heading title="works" />
-      {uploads.showcase.map(([stitle, gallery]) => (
-        <Section.Showcase key={stitle} title={stitle}>
-          {gallery.map(({ title, slides }) => (
+      {showcases.map(({ category, cases }) => (
+        <Section.Showcase key={category} title={category}>
+          {cases.map(({ caseTitle, slides }) => (
             <Gallery
-              key={title}
-              title={title}
+              key={caseTitle}
+              title={caseTitle}
               slides={slides}
-              category={stitle}
+              category={category}
             />
           ))}
         </Section.Showcase>

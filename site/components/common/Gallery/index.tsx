@@ -4,18 +4,25 @@ import 'swiper/swiper.css'
 import { SwiperSlide } from 'swiper/react'
 import dynamic from 'next/dynamic'
 import { CldImage } from 'next-cloudinary'
+import { UploadItem } from '@lib/uploads'
 
 const DynamicSwiper = dynamic(
   () => import('swiper/react').then((swiper) => swiper.Swiper),
   {
     ssr: false,
+    loading: () => <div className="h-[512px]"></div>,
   }
 )
 
 interface GalleryProps {
   id?: number
   title: string
-  slides: string[]
+  slides: {
+    assetName: string
+    size: number[]
+    alt: string
+    blurDataUrl: string
+  }[]
   category: string
 }
 
@@ -36,7 +43,7 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
     <div className="project item col-md-7 mx-auto mb-6 mb-md-9 offline">
       <div className="post-slider mb-3 mb-md-4">
         <DynamicSwiper modules={[Pagination, Navigation]} {...swiperOptions}>
-          {slides.map((slide, idx) => (
+          {slides.map(({ assetName, size, blurDataUrl, alt }, idx) => (
             <SwiperSlide key={idx}>
               {({ isActive, isNext }) => {
                 return (
@@ -54,11 +61,15 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
                       }}
                     >
                       <CldImage
-                        loading={isActive || isNext ? 'eager' : 'lazy'}
-                        alt={title}
-                        src={`assets/${slide}`}
-                        fill
-                        sizes="sm: 100vw, md; 100vw, xl: 100vw"
+                        // loading={isActive || isNext ? 'eager' : 'lazy'}
+                        alt={alt}
+                        src={assetName}
+                        width={size[0]}
+                        height={size[1]}
+                        style={{ transform: 'translate3d(0, 0, 0)' }}
+                        placeholder="blur"
+                        blurDataURL={blurDataUrl}
+                        sizes="xs: 480px, md: 680px, xl: 1025px"
                       />
                       {/* <img
                   className="lazyload"
