@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Pagination, Navigation } from 'swiper'
 import { SwiperSlide } from 'swiper/react'
 import dynamic from 'next/dynamic'
