@@ -14,6 +14,15 @@ module.exports = withCommerceConfig({
     locales: ['en-US', 'es'],
     defaultLocale: 'en-US',
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: `/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/**`,
+      },
+    ],
+  },
   rewrites() {
     return [
       (isBC || isShopify || isSwell || isVendure || isSaleor) && {
