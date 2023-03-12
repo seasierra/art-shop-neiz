@@ -4,6 +4,9 @@ import { ProductCard } from '@components/product'
 import { Grid, Marquee, Hero } from '@components/ui'
 // import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
+import Section from '@components/ui/Section'
+import uploads from '@lib/uploads'
+import Gallery from '@components/common/Gallery'
 
 export async function getStaticProps({
   preview,
@@ -54,6 +57,19 @@ export default function Home({
           />
         ))}
       </Grid>
+      <Section.Heading title="works" />
+      {uploads.showcase.map(([stitle, gallery]) => (
+        <Section.Showcase key={stitle} title={stitle}>
+          {gallery.map(({ title, slides }) => (
+            <Gallery
+              key={title}
+              title={title}
+              slides={slides}
+              category={stitle}
+            />
+          ))}
+        </Section.Showcase>
+      ))}
       <Marquee variant="secondary">
         {products.slice(0, 3).map((product: any, i: number) => (
           <ProductCard key={product.id} product={product} variant="slim" />
