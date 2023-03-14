@@ -614,6 +614,7 @@ importers:
       '@types/node': ^18.0.3
       '@types/react': ^18.0.20
       '@types/react-dom': ^18.0.6
+      '@vercel/analytics': ^0.1.11
       '@vercel/commerce': workspace:*
       '@vercel/commerce-bigcommerce': workspace:*
       '@vercel/commerce-commercejs': workspace:*
@@ -663,6 +664,7 @@ importers:
       '@cloudinary/url-gen': 1.9.2
       '@radix-ui/react-dropdown-menu': 1.0.0_7ey2zzynotv32rpkwno45fsx4e
       '@react-spring/web': 9.5.4_biqbaboplfbrettd7655fr4n2y
+      '@vercel/analytics': 0.1.11_react@18.2.0
       '@vercel/commerce': link:../packages/commerce
       '@vercel/commerce-bigcommerce': link:../packages/bigcommerce
       '@vercel/commerce-commercejs': link:../packages/commercejs
@@ -3638,6 +3640,14 @@ packages:
       '@typescript-eslint/types': 5.37.0
       eslint-visitor-keys: 3.3.0
     dev: true
+
+  /@vercel/analytics/0.1.11_react@18.2.0:
+    resolution: {integrity: sha512-mj5CPR02y0BRs1tN3oZcBNAX9a8NxsIUl9vElDPcqxnMfP0RbRc9fI9Ud7+QDg/1Izvt5uMumsr+6YsmVHcyuw==}
+    peerDependencies:
+      react: ^16.8||^17||^18
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /@vercel/edge/0.0.4:
     resolution: {integrity: sha512-KzZuSib25DsYjLa7UiMhAWfhfE9Oby1T90M0mkYMjCNK71i9vvEKRQXnhs3htmyNyid11KyI4wMEnIr7M9DqAA==}

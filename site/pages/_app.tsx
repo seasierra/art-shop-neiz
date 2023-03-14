@@ -3,6 +3,8 @@ import '@assets/chrome-bug.css'
 import '@assets/static/css/plugins.css'
 import 'keen-slider/keen-slider.min.css'
 
+import { Analytics } from '@vercel/analytics/react'
+
 import { FC, ReactNode, useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import { Head } from '@components/common'
@@ -25,6 +27,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </Layout>
       </ManagedUIContext>
+      <Analytics />
     </>
   )
 }
