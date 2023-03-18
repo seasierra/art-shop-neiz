@@ -1,5 +1,5 @@
 import { Cloudinary } from '@cloudinary/url-gen'
-import { AdvancedVideo } from '@cloudinary/react'
+import { AdvancedVideo, lazyload } from '@cloudinary/react'
 import { scale } from '@cloudinary/url-gen/actions/resize'
 import s from './AdaptiveVideo.module.css' // import { trim } from '@cloudinary/url-gen/actions/videoEdit'
 
@@ -31,10 +31,8 @@ const Video: React.FC<{
     playsInline
     muted
     loop
-    cldVid={cld
-      .video(src)
-      .resize(scale().width(videoSizes[size]))
-      .format('mp4')}
+    preload="none"
+    cldVid={cld.video(src).resize(scale().width(videoSizes[size]))}
     cldPoster={cld.video(src).format('jpg')}
   />
 )
