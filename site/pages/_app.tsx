@@ -1,7 +1,9 @@
+import '@assets/static/css/plugins.css'
+import '@assets/static/css/style.css'
+import 'keen-slider/keen-slider.min.css'
+
 import '@assets/main.css'
 import '@assets/chrome-bug.css'
-import '@assets/static/css/plugins.css'
-import 'keen-slider/keen-slider.min.css'
 
 import { Analytics } from '@vercel/analytics/react'
 

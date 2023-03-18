@@ -1,13 +1,13 @@
 import { Cloudinary } from '@cloudinary/url-gen'
 import { AdvancedVideo } from '@cloudinary/react'
 import { scale } from '@cloudinary/url-gen/actions/resize'
-// import { trim } from '@cloudinary/url-gen/actions/videoEdit'
+import s from './AdaptiveVideo.module.css' // import { trim } from '@cloudinary/url-gen/actions/videoEdit'
 
 const videoSizes = {
-  xs: 320,
-  sm: 480,
-  md: 720,
-  lg: 1080,
+  sm: 320,
+  md: 480,
+  lg: 720,
+  xl: 1080,
 }
 
 interface AdaptiveVideoPlayerProps {
@@ -21,22 +21,34 @@ const cld = new Cloudinary({
   },
 })
 
+const Video: React.FC<{
+  size: keyof typeof videoSizes
+  src: string
+}> = ({ size, src }) => (
+  <AdvancedVideo
+    className={`hidden w-full ${s[size]} `}
+    autoPlay
+    playsInline
+    muted
+    loop
+    cldVid={cld
+      .video(src)
+      .resize(scale().width(videoSizes[size]))
+      .format('mp4')}
+    cldPoster={cld.video(src).format('jpg')}
+  />
+)
+
 export default function AdaptiveVideoPlayer({
-  sizes = ['xs', 'sm', 'md', 'lg'],
+  sizes = ['sm', 'md', 'lg', 'xl'],
   videoSrc,
 }: AdaptiveVideoPlayerProps) {
   return (
-    <div className="xs:w-full">
-      {sizes.map((size) => (
-        <video key={size} className={`xs:w-full`}>
-          <source
-            src={cld
-              .video(`${videoSrc}`)
-              .resize(scale().width(videoSizes[size]))
-              .toURL()}
-          />
-        </video>
-      ))}
+    <div className="">
+      <Video size="sm" src={videoSrc} />
+      <Video size="md" src={videoSrc} />
+      <Video size="lg" src={videoSrc} />
+      <Video size="xl" src={videoSrc} />
     </div>
   )
 }

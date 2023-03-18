@@ -1,0 +1,27 @@
+.vid {
+  display: block;
+}
+
+.sm {
+  @media (max-width: 480px) {
+    display: block;
+  }
+}
+
+.md {
+  @media (min-width: 480px) and (max-width: 768px) {
+    display: block;
+  }
+}
+
+.lg {
+  @media (min-width: 768px) and (max-width: 1024px) {
+    display: block;
+  }
+}
+
+.xl {
+  @media (min-width: 1024px) {
+    display: block;
+  }
+}
