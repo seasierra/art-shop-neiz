@@ -12,6 +12,7 @@ import AdaptiveVideoPlayer from '@components/common/AdaptiveVideoPlayer'
 import range from 'lodash/range'
 import Image from 'next/image'
 import TextSection from '@components/ui/Text/TextSection'
+import ContactForm from '@components/ui/ContactForm'
 
 export async function getStaticProps({
   preview,
@@ -166,23 +167,78 @@ export default function Home({
           <span className="fst-normal">- Neiz</span>
         </p>
       </TextSection>
+      <Section.Heading title="contact" />
       <Hero
         headline=" Dessert dragée halvah croissant."
         description="Cupcake ipsum dolor sit amet lemon drops pastry cotton candy. Sweet carrot cake macaroon bonbon croissant fruitcake jujubes macaroon oat cake. Soufflé bonbon caramels jelly beans. Tiramisu sweet roll cheesecake pie carrot cake. "
       />
-      <Grid layout="B" variant="filled">
-        {products.slice(0, 3).map((product: any, i: number) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            imgProps={{
-              alt: product.name,
-              width: i === 1 ? 1080 : 540,
-              height: i === 1 ? 1080 : 540,
-            }}
-          />
-        ))}
-      </Grid>
+      {/* <Grid layout="A" variant="default"> */}
+      <section className="wrapper bg-black">
+        <div className="container pt-6 pb-10">
+          <div className="row">
+            <div className="col-xl-12 mx-auto">
+              <div className="row gy-10 gx-lg-8 gx-xl-12">
+                <div className="col-lg-7">
+                  <ContactForm />
+                </div>
+                <div className="col-lg-5 text-white">
+                  <div className="d-flex w-50% flex-row">
+                    <div>
+                      <h3 className="mb-2 text-white">links</h3>
+                      <p className="mb-1">
+                        <a
+                          className="link-white"
+                          href="https://www.instagram.com/neiz.vesten/"
+                          target="_blank"
+                        >
+                          instagram
+                        </a>
+                      </p>
+                      <p className="mb-1">
+                        <a
+                          className="link-white"
+                          href="https://twitter.com/Neizvstn"
+                          target="_blank"
+                        >
+                          twitter
+                        </a>
+                      </p>
+                      <p className="mb-1">
+                        <a
+                          className="link-white"
+                          href="https://www.pinterest.com/Neizvstn"
+                          target="_blank"
+                        >
+                          pinterest
+                        </a>
+                      </p>
+                      <p className="mb-1">
+                        <a
+                          className="link-white"
+                          href="https://foundation.app/@neizvesten"
+                          target="_blank"
+                        >
+                          foundation
+                        </a>
+                      </p>
+                      <p className="mb-1">
+                        <a
+                          className="link-white"
+                          href="https://t.me/neosymbolism"
+                          target="_blank"
+                        >
+                          telegram
+                        </a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* </Grid> */}
       <Marquee>
         {products.slice(3).map((product: any, i: number) => (
           <ProductCard key={product.id} product={product} variant="slim" />
