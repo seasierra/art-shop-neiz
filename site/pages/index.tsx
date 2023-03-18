@@ -9,6 +9,9 @@ import uploads from '@lib/uploads'
 import Gallery from '@components/common/Gallery'
 import generateBlurPlaceholder from '@lib/uploads/generateBlurPlaceholder'
 import AdaptiveVideoPlayer from '@components/common/AdaptiveVideoPlayer'
+import range from 'lodash/range'
+import Image from 'next/image'
+import TextSection from '@components/ui/Text/TextSection'
 
 export async function getStaticProps({
   preview,
@@ -108,11 +111,61 @@ export default function Home({
           ))}
         </Section.Showcase>
       ))}
+      <Section.Heading title="about" />
+
       <Marquee variant="secondary">
-        {products.slice(0, 3).map((product: any, i: number) => (
-          <ProductCard key={product.id} product={product} variant="slim" />
+        {range(4).map((idx) => (
+          <Image
+            width={300}
+            height={600}
+            placeholder="blur"
+            src={require(`@assets/static/about/${idx + 1}.jpg`)}
+            alt={`about-${idx}`}
+          />
         ))}
       </Marquee>
+      <TextSection>
+        <p>
+          Neiz.vesten is an international artist and professional tattooist, and
+          one of the founders of the neosymbolism subgenre. He connects the past
+          and future to the present with the help of new symbols, ancient ways
+          of tattooing, neural networks, NFTs, sculptures, and canvases. His
+          name in Russian – неизвестен – translates to ‘unknown artist’.
+        </p>
+        <p>
+          Neiz draws inspiration from sounds, colors, emotions, physiology,
+          psychology, science, mythology, mysticism, and more to create unique
+          symbols that transcend time and place. His work is reminiscent of
+          Wassily Kandinsky and Johannesburg Itten, but Neiz gives his own
+          alternative application and vision.
+        </p>
+        <p>
+          Neiz has been developing his alternative vision of symbols and their
+          creation for more than 10 years. Dubbed the ‘key keeper’, people turn
+          to him for unique sacred keys and symbols.
+        </p>
+        <p>Neiz has collaborated extensively with major brands including:</p>
+        <ul className="unordered-list bullet-primary">
+          <li>MERCEDES BENZ - Fashion Week</li>
+          <li>
+            MAYAN WARRIOR - Art and Music Community, Mexico City and Northern
+            California (Music festival)
+          </li>
+          <li>ART WATCH - Mechanical art watch company from New York</li>
+          <li>AMPERSOUND - Music audio system</li>
+        </ul>
+        <p>
+          As a tattoo artist, Neiz has taken part in collaborations with INKBOX,
+          Miami Tattoos, and more. He is currently sponsored by Balm Tattoo
+          (worldwide).
+        </p>
+        <p className="fst-italic fs-17">
+          “I see how the space in which we live speaks to me, and what I do
+          comes from the future.”
+          <br />
+          <span className="fst-normal">- Neiz</span>
+        </p>
+      </TextSection>
       <Hero
         headline=" Dessert dragée halvah croissant."
         description="Cupcake ipsum dolor sit amet lemon drops pastry cotton candy. Sweet carrot cake macaroon bonbon croissant fruitcake jujubes macaroon oat cake. Soufflé bonbon caramels jelly beans. Tiramisu sweet roll cheesecake pie carrot cake. "

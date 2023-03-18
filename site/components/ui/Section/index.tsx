@@ -15,7 +15,7 @@ const Showcase: React.FC<{
 }
 
 const Heading: React.FC<{ title: string }> = ({ title }) => (
-  <div className="container pt-10 pt-md-14">
+  <div className="container pt-10 pt-md-14 bg-black">
     <div className="row">
       <div className="col-12">
         <h2 className="display-1 mb-3">{title}</h2>
