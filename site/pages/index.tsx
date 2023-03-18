@@ -117,6 +117,7 @@ export default function Home({
       <Marquee variant="secondary">
         {range(4).map((idx) => (
           <Image
+            key={idx}
             width={300}
             height={600}
             placeholder="blur"
@@ -190,6 +191,7 @@ export default function Home({
                           className="link-white"
                           href="https://www.instagram.com/neiz.vesten/"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           instagram
                         </a>
@@ -199,6 +201,7 @@ export default function Home({
                           className="link-white"
                           href="https://twitter.com/Neizvstn"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           twitter
                         </a>
@@ -208,6 +211,7 @@ export default function Home({
                           className="link-white"
                           href="https://www.pinterest.com/Neizvstn"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           pinterest
                         </a>
@@ -217,6 +221,7 @@ export default function Home({
                           className="link-white"
                           href="https://foundation.app/@neizvesten"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           foundation
                         </a>
@@ -226,6 +231,7 @@ export default function Home({
                           className="link-white"
                           href="https://t.me/neosymbolism"
                           target="_blank"
+                          rel="noreferrer"
                         >
                           telegram
                         </a>
