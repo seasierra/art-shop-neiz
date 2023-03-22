@@ -1,19 +1,19 @@
 {
-  "title": "ACME Storefront | Powered by Next.js Commerce",
-  "titleTemplate": "%s - ACME Storefront",
-  "description": "Next.js Commerce - https://www.nextjs.org/commerce",
+  "title": "Contemporary artist Neiz.vesten",
+  "titleTemplate": "%s - Neiz.vesten",
+  "description": "All the art that you will see here is a tool for understanding the world and yourself for the artist and the people with whom he intersects.",
   "openGraph": {
-    "title": "ACME Storefront | Powered by Next.js Commerce",
-    "description": "Next.js Commerce - https://www.nextjs.org/commerce",
+    "title": "Contemporary artist Neiz.vesten",
+    "description": "All the art that you will see here is a tool for understanding the world and yourself for the artist and the people with whom he intersects.",
     "type": "website",
-    "url": "https://nextjs.org/commerce",
-    "site_name": "Next.js Commerce",
+    "url": "https://neizvesten.com/",
+    "site_name": "neizvesten.com",
     "images": [
       {
-        "url": "/card.png",
-        "width": "800",
-        "height": "600",
-        "alt": "Next.js Commerce"
+        "url": "/social.jpg",
+        "width": "967",
+        "height": "504",
+        "alt": "Neizvesten"
       }
     ]
   },
