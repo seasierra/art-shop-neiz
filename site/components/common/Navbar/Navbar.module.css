@@ -9,6 +9,12 @@
 
 .nav {
   @apply relative flex flex-row justify-between py-4 md:py-4;
+
+  :global {
+    .nav-link {
+      @apply py-0;
+    }
+  }
 }
 
 .navMenu {
