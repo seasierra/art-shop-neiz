@@ -1,7 +1,7 @@
 import commerce from '@lib/api/commerce'
 import { Layout, SEO } from '@components/common'
 import { ProductCard } from '@components/product'
-import { Grid, Marquee, Hero } from '@components/ui'
+import { Grid, Marquee, Hero, Container } from '@components/ui'
 // import HomeAllProductsGrid from '@components/common/HomeAllProductsGrid'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Section from '@components/ui/Section'
@@ -101,19 +101,21 @@ export default function Home({
           />
         ))}
       </Grid> */}
-      <Section.Heading title="works" />
-      {showcases.map(({ category, cases }) => (
-        <Section.Showcase key={category} title={category}>
-          {cases.map(({ caseTitle, slides }) => (
-            <Gallery
-              key={caseTitle}
-              title={caseTitle}
-              slides={slides}
-              category={category}
-            />
-          ))}
-        </Section.Showcase>
-      ))}
+      <Container>
+        <Section.Heading title="works" />
+        {showcases.map(({ category, cases }) => (
+          <Section.Showcase key={category} title={category}>
+            {cases.map(({ caseTitle, slides }) => (
+              <Gallery
+                key={caseTitle}
+                title={caseTitle}
+                slides={slides}
+                category={category}
+              />
+            ))}
+          </Section.Showcase>
+        ))}
+      </Container>
       <Section.Heading title="about" />
 
       <Marquee variant="secondary">

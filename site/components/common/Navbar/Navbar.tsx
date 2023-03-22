@@ -20,7 +20,10 @@ const Navbar: FC<NavbarProps> = ({ links }) => (
     <Container clean className="mx-auto max-w-8xl px-6 w-full">
       <div className={s.nav}>
         <div className="flex items-center flex-1">
-          <Link href="/" className="nav-link text-xl text-inherit">
+          <Link
+            href="/"
+            className="nav-link visited:text-inherit text-xl text-inherit"
+          >
             neiz.vesten
           </Link>
           <Menu />

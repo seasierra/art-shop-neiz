@@ -85,6 +85,9 @@ const UserNav: React.FC<{
             className={s.item}
             aria-label="Menu"
             variant="naked"
+            style={{
+              color: 'currentColor',
+            }}
             onClick={() => {
               setSidebarView('MOBILE_MENU_VIEW')
               openSidebar()
