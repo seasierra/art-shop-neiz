@@ -84,7 +84,9 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <AdaptiveVideoPlayer poster="/main.png" videoSrc="media/main_ibrzrf" />
+      <div className="-mt-16">
+        <AdaptiveVideoPlayer poster="/main.png" videoSrc="media/main_ibrzrf" />
+      </div>
       {/* <Grid variant="filled">
         {products.slice(0, 3).map((product: any, i: number) => (
           <ProductCard
@@ -169,11 +171,6 @@ export default function Home({
         </p>
       </TextSection>
       <Section.Heading title="contact" />
-      <Hero
-        headline=" Dessert dragée halvah croissant."
-        description="Cupcake ipsum dolor sit amet lemon drops pastry cotton candy. Sweet carrot cake macaroon bonbon croissant fruitcake jujubes macaroon oat cake. Soufflé bonbon caramels jelly beans. Tiramisu sweet roll cheesecake pie carrot cake. "
-      />
-      {/* <Grid layout="A" variant="default"> */}
       <section className="wrapper bg-black">
         <div className="container pt-6 pb-10">
           <div className="row">

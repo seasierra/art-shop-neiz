@@ -34,7 +34,11 @@ function getProviderName() {
       : '@vercel/commerce-local')
   )
 }
-
+/**
+ *
+ * @param {import('next').NextConfig} nextConfig
+ *
+ */
 function withCommerceConfig(nextConfig = {}) {
   const config = merge(
     { commerce: { provider: getProviderName() } },

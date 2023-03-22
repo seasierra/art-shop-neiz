@@ -1,3 +1,4 @@
+import { UserNav } from '@components/common'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -5,20 +6,15 @@ export default function Menu() {
   const [show, setShow] = useState(false)
 
   return (
-    <nav className="navbar navbar-expand-lg center-nav transparent position-absolute navbar-dark">
+    <nav className="navbar navbar-expand-lg center-nav transparent">
       <div className="container flex-lg-row flex-nowrap align-items-center">
-        <div className="navbar-brand w-100">
-          <Link href="/" className="text-brand nav-link">
-            neiz.vesten
-          </Link>
-        </div>
         <div
           className={`navbar-collapse visible offcanvas offcanvas-nav offcanvas-start ${
             show ? 'show' : ''
           }`}
         >
           <div className="offcanvas-header d-lg-none">
-            <h3 className="text-white fs-30 mb-0">neiz.vesten</h3>
+            <h3 className="fs-30 mb-0 text-inherit">neiz.vesten</h3>
             <button
               type="button"
               className="btn-close btn-close-white"
@@ -29,74 +25,63 @@ export default function Menu() {
           </div>
           <div className="offcanvas-body ms-lg-auto d-flex flex-column h-100">
             <ul className="navbar-nav">
-              <li className="nav-item dropdown">
+              <li className="nav-item">
+                <Link className="nav-link text-current" href="/search">
+                  catalog
+                </Link>
+              </li>
+              <li className="nav-item  dropdown">
                 <a
-                  className="nav-link dropdown-toggle active show"
+                  className="nav-link text-current dropdown-toggle active show"
                   href="#"
                   data-bs-toggle="dropdown"
                 >
                   works
                 </a>
                 <ul className="dropdown-menu active show">
-                  <li className="nav-item">
-                    <a className="dropdown-item scroll" href="#offline">
-                      offline art
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="dropdown-item scroll" href="#digital">
-                      digital art
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="dropdown-item scroll" href="#clothes">
-                      clothes
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="dropdown-item scroll" href="#collaborations">
-                      collaborations
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="dropdown-item scroll" href="#tattoos">
-                      tattoos
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <Link className="dropdown-item" href="/product/design">
-                      designs
-                    </Link>
-                  </li>
+                  {[
+                    { name: 'offline art', href: '/#offline' },
+                    { name: 'digital art', href: '/#digital' },
+                    { name: 'clothes', href: '/#clothes' },
+                    { name: 'collaborations', href: '/#collaborations' },
+                    { name: 'tattoos', href: '/#tattoos' },
+                    { name: 'designs', href: '/product/design' },
+                  ].map((l: any) => (
+                    <li className="nav-item text-current" key={l.href}>
+                      <Link className="dropdown-item scroll" href={l.href}>
+                        {l.name}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link scroll" href="#about">
+                <Link className="nav-link text-current" href="/#about">
                   about
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link scroll" href="#contact">
+                <Link className="nav-link text-current" href="/#contact">
                   contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="navbar-other ms-lg-4">
+        {/* <div className="navbar-other ms-lg-4">
           <ul className="navbar-nav flex-row align-items-center ms-auto">
-            <li className="nav-item d-lg-none">
+            <li className="nav-item text-current d-lg-none">
               <button
-                className="hamburger offcanvas-nav-btn"
+                className="hamburger !text-current offcanvas-nav-btn"
                 onClick={() => setShow(true)}
               >
                 <span></span>
               </button>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </nav>
   )

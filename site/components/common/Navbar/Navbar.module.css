@@ -1,6 +1,10 @@
 .root {
-  @apply sticky top-0 bg-transparent z-40 transition-all duration-150;
+  @apply sticky top-0 bg-transparent z-40 transition-all duration-150 flex items-center;
   min-height: 74px;
+
+  &.shadow-magical {
+    @apply bg-black;
+  }
 }
 
 .nav {
