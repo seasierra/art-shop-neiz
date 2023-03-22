@@ -84,18 +84,7 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      {/* <SEO
-        title="Contemporary artist Neiz.vesten"
-        description="All the art that you will see here is a tool for understanding the world and yourself for the artist and the people with whom he intersects."
-        openGraph={{
-          images: [
-            {
-              url: 'https://neizvesten.com/assets/img/social.jpg',
-            },
-          ],
-        }}
-      /> */}
-      <AdaptiveVideoPlayer videoSrc="media/main_ibrzrf" />
+      <AdaptiveVideoPlayer poster="/main.png" videoSrc="media/main_ibrzrf" />
       {/* <Grid variant="filled">
         {products.slice(0, 3).map((product: any, i: number) => (
           <ProductCard

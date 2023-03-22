@@ -12,6 +12,7 @@ const videoSizes = {
 
 interface AdaptiveVideoPlayerProps {
   sizes?: (keyof typeof videoSizes)[]
+  poster: string
   videoSrc: string
 }
 
@@ -23,8 +24,9 @@ const cld = new Cloudinary({
 
 const Video: React.FC<{
   size: keyof typeof videoSizes
+  poster: string
   src: string
-}> = ({ size, src }) => (
+}> = ({ size, src, poster }) => (
   <AdvancedVideo
     className={`hidden w-full ${s[size]} `}
     autoPlay
@@ -33,20 +35,21 @@ const Video: React.FC<{
     loop
     preload="none"
     cldVid={cld.video(src).resize(scale().width(videoSizes[size]))}
-    cldPoster={cld.video(src).format('jpg')}
+    cldPoster={cld.image(poster)}
   />
 )
 
 export default function AdaptiveVideoPlayer({
   sizes = ['sm', 'md', 'lg', 'xl'],
+  poster,
   videoSrc,
 }: AdaptiveVideoPlayerProps) {
   return (
     <div className="">
-      <Video size="sm" src={videoSrc} />
-      <Video size="md" src={videoSrc} />
-      <Video size="lg" src={videoSrc} />
-      <Video size="xl" src={videoSrc} />
+      <Video size="sm" src={videoSrc} poster={poster} />
+      <Video size="md" src={videoSrc} poster={poster} />
+      <Video size="lg" src={videoSrc} poster={poster} />
+      <Video size="xl" src={videoSrc} poster={poster} />
     </div>
   )
 }
