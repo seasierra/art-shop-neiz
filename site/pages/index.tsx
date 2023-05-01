@@ -232,7 +232,7 @@ export default function Home({
                           target="_blank"
                           rel="noreferrer"
                         >
-                          telegram
+                          telegram2
                         </a>
                       </p>
                     </div>
