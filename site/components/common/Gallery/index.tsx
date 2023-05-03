@@ -3,8 +3,7 @@ import { Pagination, Navigation } from 'swiper'
 import 'swiper/swiper.css'
 import { SwiperSlide } from 'swiper/react'
 import dynamic from 'next/dynamic'
-import { CldImage } from 'next-cloudinary'
-import { UploadItem } from '@lib/uploads'
+import { CldImage, CldVideoPlayer } from 'next-cloudinary'
 
 const DynamicSwiper = dynamic(
   () => import('swiper/react').then((swiper) => swiper.Swiper),
@@ -46,6 +45,8 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
           {slides.map(({ assetName, size, blurDataUrl, alt }, idx) => (
             <SwiperSlide key={idx}>
               {({ isActive, isNext }) => {
+                const isVideo = assetName.includes('video')
+
                 return (
                   <figure>
                     <a
@@ -60,17 +61,26 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
                         GLightbox(lightboxOptions).open()
                       }}
                     >
-                      <CldImage
-                        // loading={isActive || isNext ? 'eager' : 'lazy'}
-                        alt={alt}
-                        src={assetName}
-                        width={size[0]}
-                        height={size[1]}
-                        style={{ transform: 'translate3d(0, 0, 0)' }}
-                        placeholder="blur"
-                        blurDataURL={blurDataUrl}
-                        sizes="xs: 480px, md: 680px, xl: 1025px"
-                      />
+                      {isVideo && (
+                        <CldVideoPlayer
+                          width={300}
+                          height={300}
+                          src={assetName}
+                        />
+                      )}
+                      {!isVideo && (
+                        <CldImage
+                          // loading={isActive || isNext ? 'eager' : 'lazy'}
+                          alt={alt}
+                          src={assetName}
+                          width={size[0]}
+                          height={size[1]}
+                          style={{ transform: 'translate3d(0, 0, 0)' }}
+                          placeholder="blur"
+                          blurDataURL={blurDataUrl}
+                          sizes="xs: 480px, md: 680px, xl: 1025px"
+                        />
+                      )}
                       {/* <img
                   className="lazyload"
                   data-src={require(`@assets/image/${id}/${idx}.jpg`).default}
