@@ -93,15 +93,25 @@
     "cases": [
       {
         "case": "Digital art: neiz.vesten x kir_psy x arcane prism",
-        "slides": []
+        "slides": [
+          ["assets/9-1-preview", [960, 596]],
+          ["assets/video9-1", [1920, 1080]],
+          ["assets/video9-2", [1920, 1080]]
+        ]
       },
       {
         "case": "Neiz.vesten for Arcane Prism",
-        "slides": []
+        "slides": [
+          ["assets/video10-2", [1920, 1080]],
+          ["assets/video10-1", [1920, 1080]]
+        ]
       },
       {
         "case": "Neiz.vesten x Bleicherleo x Arcane Prism",
-        "slides": []
+        "slides": [
+          ["assets/video11-1", [1920, 1080]],
+          ["assets/video11-2", [1920, 1080]]
+        ]
       },
       {
         "case": "Augmented reality yoga mat and bag by Neiz.vesten",
@@ -114,7 +124,10 @@
       },
       {
         "case": "Digital mask by Neiz.vesten and After Form",
-        "slides": []
+        "slides": [
+          ["assets/video16-11", [960, 1280]],
+          ["assets/video16-2", [960, 1280]]
+        ]
       },
       {
         "case": "Neural networks + Neosymbolism",
@@ -202,9 +215,9 @@
       {
         "case": "Neosymbolism design by Neiz.vesten on Land Rover",
         "slides": [
+          ["assets/4_video4", [1545, 961]],
           ["assets/4_2", [1170, 1462]],
-          ["assets/4_1", [1280, 1032]],
-          ["assets/4_video4", [1545, 961]]
+          ["assets/4_1", [1280, 1032]]
         ]
       },
       {
@@ -262,7 +275,7 @@
           ["assets/1_11", [3024, 4032]],
           ["assets/1_12", [3024, 4032]],
           ["assets/1_13", [3024, 4032]],
-          ["assets/1_video1", [1690, 893]]
+          ["assets/1-video1", [1690, 893]]
         ]
       },
       {
