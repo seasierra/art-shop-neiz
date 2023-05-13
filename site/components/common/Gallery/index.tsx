@@ -1,99 +1,82 @@
-// @ts-nocheck
-import { Pagination, Navigation } from 'swiper'
-import 'swiper/swiper.css'
-import { SwiperSlide } from 'swiper/react'
-import dynamic from 'next/dynamic'
-import { CldImage, CldVideoPlayer } from 'next-cloudinary'
+import SwiperCore, { Pagination, Navigation } from 'swiper';
+import 'swiper/swiper-bundle.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { CldImage, CldVideoPlayer } from 'next-cloudinary';
+import { useState } from 'react';
 
-const DynamicSwiper = dynamic(
-  () => import('swiper/react').then((swiper) => swiper.Swiper),
-  {
-    ssr: false,
-    loading: () => <div className="h-[512px]"></div>,
-  }
-)
+SwiperCore.use([Pagination, Navigation]);
 
 interface GalleryProps {
-  id?: number
-  title: string
+  id?: number;
+  title: string;
   slides: {
-    assetName: string
-    size: number[]
-    alt: string
-    blurDataUrl: string
-  }[]
-  category: string
+    assetName: string;
+    size: number[];
+    alt: string;
+    blurDataUrl: string;
+  }[];
+  category: string;
 }
 
 export default function Gallery({ id, title, category, slides }: GalleryProps) {
-  const galleryId = encodeURIComponent(title)
+  const galleryId = encodeURIComponent(title);
+  const [isVideo, setIsVideo] = useState(false);
 
-  const lightboxOptions = { selector: '[data-gallery="' + galleryId + '"]' }
-
-  const swiperOptions = {
-    slidesPerView: 1,
-    spaceBetween: 5,
-    pagination: { clickable: true },
-    navigation: true,
-    loop: true,
-  }
+  const lightboxOptions = { selector: '[data-gallery="' + galleryId + '"]' };
 
   return (
     <div className="project item col-md-7 mx-auto mb-6 mb-md-9 offline">
       <div className="post-slider mb-3 mb-md-4">
-        <DynamicSwiper modules={[Pagination, Navigation]} {...swiperOptions}>
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={5}
+          pagination={{ clickable: true }}
+          navigation={true}
+          loop={true}
+          autoHeight={true} // добавить это
+          style={{ height: isVideo ? '500px' : 'auto' }} // обновляем стиль контейнера
+          onSlideChange={(swiper) => {
+            setIsVideo(slides[swiper.activeIndex].assetName.includes('video')); // обновляем состояние
+          }}// добавить это
+        >
           {slides.map(({ assetName, size, blurDataUrl, alt }, idx) => (
             <SwiperSlide key={idx}>
-              {({ isActive, isNext }) => {
-                const isVideo = assetName.includes('video')
+              <a
+                className="relative block h-full w-full"
+                // href={require(`@assets/image/${id}/${idx}.jpg`).default}
+                data-gallery={galleryId}
+                onClick={async (event) => {
+                  event.preventDefault();
 
-                return (
-                  <figure>
-                    <a
-                      className="relative block h-full w-full aspect-[3/4]"
-                      // href={require(`@assets/image/${id}/${idx}.jpg`).default}
-                      data-glightbox={`title:${title};data-gallery:${galleryId}`}
-                      onClick={async (event) => {
-                        event.preventDefault()
+                  const GLightbox = (await import('glightbox')).default;
 
-                        const GLightbox = (await import('glightbox')).default
-
-                        GLightbox(lightboxOptions).open()
-                      }}
-                    >
-                      {isVideo && (
-                        <CldVideoPlayer
-                          width={300}
-                          height={300}
-                          src={assetName}
-                        />
-                      )}
-                      {!isVideo && (
-                        <CldImage
-                          // loading={isActive || isNext ? 'eager' : 'lazy'}
-                          alt={alt}
-                          src={assetName}
-                          width={size[0]}
-                          height={size[1]}
-                          style={{ transform: 'translate3d(0, 0, 0)' }}
-                          placeholder="blur"
-                          blurDataURL={blurDataUrl}
-                          sizes="xs: 480px, md: 680px, xl: 1025px"
-                        />
-                      )}
-                      {/* <img
+                //  GLightbox(lightboxOptions).open();
+                }}
+              >
+                {assetName.includes('video') ? (
+                  <CldVideoPlayer width={300} height={300} src={assetName} />
+                ) : (
+                  <CldImage
+                    alt={alt}
+                    src={assetName}
+                    width={size[0]}
+                    height={size[1]}
+                    style={{ transform: 'translate3d(0, 0, 0)' }}
+                    placeholder="blur"
+                    blurDataURL={blurDataUrl}
+                    sizes="xs: 480px, md: 680px, xl: 1025px"
+                  />
+                )}
+                {/* <img
                   className="lazyload"
                   data-src={require(`@assets/image/${id}/${idx}.jpg`).default}
                   src={require(`@assets/image/${id}/${idx}.jpg`).default}
                   alt={title}
                 /> */}
-                    </a>
-                  </figure>
-                )
-              }}
+              </a>
             </SwiperSlide>
           ))}
-        </DynamicSwiper>
+        </Swiper>
       </div>
       <div className="post-header">
         <h2 className="post-title h4 mb-1 fw-normal">
@@ -108,5 +91,5 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
         </ul>
       </div>
     </div>
-  )
+  );
 }
