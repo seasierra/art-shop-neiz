@@ -34,10 +34,14 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
           navigation={true}
           loop={true}
           autoHeight={true} // добавить это
-          style={{ height: isVideo ? '500px' : 'auto' }} // обновляем стиль контейнера
-          onSlideChange={(swiper) => {
-            setIsVideo(slides[swiper.activeIndex].assetName.includes('video')); // обновляем состояние
-          }}// добавить это
+          style={{ height: isVideo ? '500px' : 'auto' }}
+        
+          onSlideChangeTransitionStart={(swiper) => {
+
+            setIsVideo(slides[swiper.realIndex].assetName.includes('video'));
+          }}
+         
+       
         >
           {slides.map(({ assetName, size, blurDataUrl, alt }, idx) => (
             <SwiperSlide key={idx}>
