@@ -3,6 +3,7 @@ import 'swiper/swiper-bundle.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { CldImage, CldVideoPlayer } from 'next-cloudinary';
 import { useState } from 'react';
+import AdaptiveVideoPlayer from '../AdaptiveVideoPlayer';
 
 SwiperCore.use([Pagination, Navigation]);
 
@@ -58,7 +59,7 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
                 }}
               >
                 {assetName.includes('video') ? (
-                  <CldVideoPlayer width={300} height={300} src={assetName} />
+               <AdaptiveVideoPlayer videoSrc={assetName} poster="https://res.cloudinary.com/dnivjtz3i/image/upload/v1678030124/assets/1_video1_preview.png" />
                 ) : (
                   <CldImage
                     alt={alt}
