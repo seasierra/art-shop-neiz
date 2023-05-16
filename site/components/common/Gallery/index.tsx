@@ -1,9 +1,10 @@
 import SwiperCore, { Pagination, Navigation } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { CldImage, CldVideoPlayer } from 'next-cloudinary';
+import { CldImage } from 'next-cloudinary';
 import { useState } from 'react';
 import AdaptiveVideoPlayer from '../AdaptiveVideoPlayer';
+
 
 SwiperCore.use([Pagination, Navigation]);
 
@@ -18,6 +19,34 @@ interface GalleryProps {
   }[];
   category: string;
 }
+
+interface OptimizedCldImageProps {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  placeholder?: string;
+  blurDataURL?: string;
+}
+
+
+
+const OptimizedCldImage = ({ src , width, height, alt, placeholder, blurDataURL } :  any) => {
+  const optimizedSrc = src.replace('/upload/', '/upload/q_auto,f_auto/');
+
+  return (
+    <CldImage
+      alt={alt}
+      src={optimizedSrc}
+      width={width}
+      height={height}
+      style={{ transform: 'translate3d(0, 0, 0)' }}
+      placeholder={placeholder}
+      blurDataURL={blurDataURL}
+
+    />
+  );
+};
 
 export default function Gallery({ id, title, category, slides }: GalleryProps) {
   const galleryId = encodeURIComponent(title);
@@ -61,15 +90,15 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
                 {assetName.includes('video') ? (
                <AdaptiveVideoPlayer videoSrc={assetName} poster="https://res.cloudinary.com/dnivjtz3i/image/upload/v1678030124/assets/1_video1_preview.png" />
                 ) : (
-                  <CldImage
+                  <OptimizedCldImage
                     alt={alt}
                     src={assetName}
                     width={size[0]}
                     height={size[1]}
-                    style={{ transform: 'translate3d(0, 0, 0)' }}
+                   
                     placeholder="blur"
                     blurDataURL={blurDataUrl}
-                    sizes="xs: 480px, md: 680px, xl: 1025px"
+                    
                   />
                 )}
                 {/* <img
