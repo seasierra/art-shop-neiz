@@ -85,7 +85,7 @@ export default function Home({
   return (
     <>
       <div className="-mt-16">
-        <AdaptiveVideoPlayer poster="/main.png" videoSrc="media/main_ibrzrf" />
+        <AdaptiveVideoPlayer poster="/main.png" videoSrc="media/main_ibrzrf"  autoPlay={true} controls={false} />
       </div>
       {/* <Grid variant="filled">
         {products.slice(0, 3).map((product: any, i: number) => (
