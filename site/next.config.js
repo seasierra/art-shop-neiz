@@ -18,6 +18,7 @@ module.exports = withCommerceConfig({
     defaultLocale: 'en-US',
   },
   images: {
+    domains: ['pub-7c193df2053b4620b5c84000089210ff.r2.dev'],
     remotePatterns: [
       {
         protocol: 'https',
