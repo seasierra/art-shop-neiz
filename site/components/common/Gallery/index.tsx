@@ -1,7 +1,8 @@
 import SwiperCore, { Pagination, Navigation, Lazy } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { CldImage } from 'next-cloudinary';
+//import { CldImage } from 'next-cloudinary';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import AdaptiveVideoPlayer from '../AdaptiveVideoPlayer';
 import { lazyload } from '@cloudinary/react';
@@ -36,6 +37,7 @@ const OptimizedCldImage = ({ src , width, height, alt, placeholder, blurDataURL 
   const optimizedSrc = src.replace('/upload/', '/upload/q_auto,f_auto/');
 
   return (
+/*
     <CldImage
       alt={alt}
       src={optimizedSrc}
@@ -45,8 +47,17 @@ const OptimizedCldImage = ({ src , width, height, alt, placeholder, blurDataURL 
       placeholder={placeholder}
       blurDataURL={blurDataURL}
       loading="lazy"
-
     />
+    */
+    <Image
+    src={optimizedSrc}
+    alt={alt}
+    width={width}
+    height={height}
+    placeholder="blur"
+    blurDataURL={blurDataURL}
+  />
+
   );
 };
 
@@ -120,7 +131,7 @@ export default function Gallery({ id, title, category, slides }: GalleryProps) {
                // Open lightbox
              }}
            >
-             {assetName.includes('video') ? (
+             {assetName.includes('mp4') ? (
                <AdaptiveVideoPlayer
                  videoSrc={assetName}
                  poster="https://res.cloudinary.com/dnivjtz3i/image/upload/v1678030124/assets/1_video1_preview.png"
