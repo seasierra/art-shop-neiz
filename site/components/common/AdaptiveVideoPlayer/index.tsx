@@ -1,15 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import s from './AdaptiveVideo.module.css';
 
-const videoSizes = {
-  sm: 320,
-  md: 480,
-  lg: 720,
-  xl: 1080,
-};
-
 interface AdaptiveVideoPlayerProps {
-  sizes?: ('sm' | 'md' | 'lg' | 'xl')[];
+  sizes?: ('small' | 'large')[];
   poster: string;
   videoSrc: string;
   autoPlay: boolean;
@@ -18,7 +11,7 @@ interface AdaptiveVideoPlayerProps {
 
 const Video: React.FC<{
   autoPlay: boolean;
-  size: 'sm' | 'md' | 'lg' | 'xl';
+  size: 'small' | 'large';
   poster: string;
   src: string;
   controls: boolean;
@@ -26,7 +19,7 @@ const Video: React.FC<{
 }> = ({ size, src, poster, autoPlay, controls, isPlaying }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const video = videoRef.current;
     if (video) {
       if (isPlaying && video.paused) {
@@ -51,18 +44,43 @@ const Video: React.FC<{
   );
 };
 
-export default function AdaptiveVideoPlayer({
-  sizes = ['sm', 'md', 'lg', 'xl'],
+const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
+  sizes = ['small', 'large'],
   poster,
   videoSrc,
   autoPlay,
   controls,
-}: AdaptiveVideoPlayerProps) {
+}) => {
   const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const [currentSizeIndex, setCurrentSizeIndex] = useState(0);
 
   const handlePlayButtonClick = () => {
     setIsPlaying((prevIsPlaying) => !prevIsPlaying);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      const windowWidth = window.innerWidth;
+      const newIndex = windowWidth >= 720 ? 1 : 0;
+      setCurrentSizeIndex(newIndex);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const getVideoSrc = (size: 'small' | 'large', videoSrc: string) => {
+    debugger
+    if (size === 'small') {
+      return videoSrc.replace('.mp4', '-small.mp4');
+    }
+    return videoSrc;
+  };
+  
 
   return (
     <div className="">
@@ -81,17 +99,16 @@ export default function AdaptiveVideoPlayer({
         </button>
       )}
 
-      {sizes.map((size) => (
-        <Video
-          key={size}
-          size={size}
-          src={videoSrc}
-          poster={poster}
-          autoPlay={autoPlay}
-          controls={controls}
-          isPlaying={isPlaying}
-        />
-      ))}
+      <Video
+        size={sizes[currentSizeIndex]}
+        src={getVideoSrc(sizes[currentSizeIndex], videoSrc)}
+        poster={poster}
+        autoPlay={autoPlay}
+        controls={controls}
+        isPlaying={isPlaying}
+      />
     </div>
   );
-}
+};
+
+export default AdaptiveVideoPlayer;
