@@ -1,22 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import s from './AdaptiveVideo.module.css';
 
-interface AdaptiveVideoPlayerProps {
-  sizes?: ('small' | 'large')[];
-  poster: string;
-  videoSrc: string;
-  autoPlay: boolean;
-  controls: boolean;
-}
-
-const Video: React.FC<{
+interface VideoProps {
   autoPlay: boolean;
   size: 'small' | 'large';
   poster: string;
   src: string;
   controls: boolean;
   isPlaying: boolean;
-}> = ({ size, src, poster, autoPlay, controls, isPlaying }) => {
+  onLoadedData?: () => void;
+}
+
+const Video: React.FC<VideoProps> = ({
+  autoPlay,
+  size,
+  src,
+  poster,
+  controls,
+  isPlaying,
+  onLoadedData,
+}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -38,11 +41,20 @@ const Video: React.FC<{
       loop
       controls={controls}
       ref={videoRef}
+      onLoadedData={onLoadedData}
     >
       <source src={src} type="video/mp4" />
     </video>
   );
 };
+
+interface AdaptiveVideoPlayerProps {
+  sizes?: ('small' | 'large')[];
+  poster: string;
+  videoSrc: string;
+  autoPlay: boolean;
+  controls: boolean;
+}
 
 const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   sizes = ['small', 'large'],
@@ -74,13 +86,15 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   }, []);
 
   const getVideoSrc = (size: 'small' | 'large', videoSrc: string) => {
-    debugger
     if (size === 'small') {
       return videoSrc.replace('.mp4', '-small.mp4');
     }
     return videoSrc;
   };
-  
+
+  const handleLoadedData = () => {
+    // Действия после загрузки видео
+  };
 
   return (
     <div className="">
@@ -104,11 +118,12 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
         src={getVideoSrc(sizes[currentSizeIndex], videoSrc)}
         poster={poster}
         autoPlay={autoPlay}
-        controls={controls}
-        isPlaying={isPlaying}
+        controls={controls}  
+           isPlaying={isPlaying}
+        onLoadedData={handleLoadedData}
       />
     </div>
-  );
-};
-
-export default AdaptiveVideoPlayer;
+    );
+  };
+  
+  export default AdaptiveVideoPlayer;
