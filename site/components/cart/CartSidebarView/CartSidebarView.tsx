@@ -27,10 +27,30 @@ const CartSidebarView: FC = () => {
     }
   )
   const handleClose = () => closeSidebar()
-  const goToCheckout = () => setSidebarView('CHECKOUT_VIEW')
+  //const goToCheckout = () => setSidebarView('CHECKOUT_VIEW')
+  const goToCheckout = () => {
+    const checkoutUrl = getCookie('shopify_checkoutUrl')
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl
+    } else {
+      // Handle the case when checkoutUrl is null
+      console.error('Checkout URL not found in the cookie')
+    }
+  }
 
   const error = null
   const success = null
+
+  const getCookie = (name: string | any[]) => {
+    const cookies = document.cookie.split(';')
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim()
+      if (cookie.startsWith(`${name}=`)) {
+        return cookie.substring(name.length + 1)
+      }
+    }
+    return null
+  }
 
   return (
     <SidebarLayout
@@ -110,11 +130,23 @@ const CartSidebarView: FC = () => {
             </div>
             <div>
               {process.env.COMMERCE_CUSTOMCHECKOUT_ENABLED ? (
-                <Button Component="a" width="100%" onClick={goToCheckout}>
+                <Button
+                  Component="a"
+                  width="100%"
+                  onClick={() => {
+                    goToCheckout()
+                  }}
+                >
                   Proceed to Checkout ({total})
                 </Button>
               ) : (
-                <Button href="/checkout" Component="a" width="100%">
+                <Button
+                  Component="a"
+                  width="100%"
+                  onClick={() => {
+                    goToCheckout()
+                  }}
+                >
                   Proceed to Checkout
                 </Button>
               )}
