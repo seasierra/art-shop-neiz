@@ -1,14 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import s from './AdaptiveVideo.module.css';
+import React, { useEffect, useRef, useState } from 'react'
+import s from './AdaptiveVideo.module.css'
+import { useMediaQuery } from 'react-responsive'
 
 interface VideoProps {
-  autoPlay: boolean;
-  size: 'small' | 'large';
-  poster: string;
-  src: string;
-  controls: boolean;
-  isPlaying: boolean;
-  onLoadedData?: () => void;
+  autoPlay: boolean
+  size: 'small' | 'large'
+  poster: string
+  src: string
+  controls: boolean
+  isPlaying: boolean
+  onLoadedData?: () => void
 }
 
 const Video: React.FC<VideoProps> = ({
@@ -20,18 +21,18 @@ const Video: React.FC<VideoProps> = ({
   isPlaying,
   onLoadedData,
 }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    const video = videoRef.current;
+    const video = videoRef.current
     if (video) {
       if (isPlaying && video.paused) {
-        video.play();
+        video.play()
       } else if (!isPlaying && !video.paused) {
-        video.pause();
+        video.pause()
       }
     }
-  }, [isPlaying]);
+  }, [isPlaying])
 
   return (
     <video
@@ -45,15 +46,15 @@ const Video: React.FC<VideoProps> = ({
     >
       <source src={src} type="video/mp4" />
     </video>
-  );
-};
+  )
+}
 
 interface AdaptiveVideoPlayerProps {
-  sizes?: ('small' | 'large')[];
-  poster: string;
-  videoSrc: string;
-  autoPlay: boolean;
-  controls: boolean;
+  sizes?: ('small' | 'large')[]
+  poster: string
+  videoSrc: string
+  autoPlay: boolean
+  controls: boolean
 }
 
 const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
@@ -63,42 +64,38 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   autoPlay,
   controls,
 }) => {
-  const [isPlaying, setIsPlaying] = useState(autoPlay);
-  const [currentSizeIndex, setCurrentSizeIndex] = useState(0);
+  const [isReady, setIsReady] = useState(false)
+  const isLargeScreen = useMediaQuery({ minWidth: 720 })
+  const size = isLargeScreen ? 'large' : 'small'
+
+  const [isPlaying, setIsPlaying] = useState(autoPlay)
 
   const handlePlayButtonClick = () => {
-    setIsPlaying((prevIsPlaying) => !prevIsPlaying);
-  };
-
-  useEffect(() => {
-    const handleResize = () => {
-      const windowWidth = window.innerWidth;
-      const newIndex = windowWidth >= 720 ? 1 : 0;
-      setCurrentSizeIndex(newIndex);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+    setIsPlaying((prevIsPlaying) => !prevIsPlaying)
+  }
 
   const getVideoSrc = (size: 'small' | 'large', videoSrc: string) => {
     if (size === 'small') {
-      return videoSrc.replace('.mp4', '-small.mp4');
+      return videoSrc.replace('.mp4', '-small.mp4')
     }
-    return videoSrc;
-  };
+    return videoSrc
+  }
 
   const handleLoadedData = () => {
     // Действия после загрузки видео
-  };
+  }
+
+  useEffect(() => {
+    setIsReady(true)
+  }, [])
+
+  if (!isReady) {
+    return null // Или любой другой способ отображения загрузки или запасного контента
+  }
 
   return (
     <div className="">
-      {(!autoPlay && !isPlaying) && (
+      {!autoPlay && !isPlaying && (
         <button className={s.button} onClick={handlePlayButtonClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -114,16 +111,16 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
       )}
 
       <Video
-        size={sizes[currentSizeIndex]}
-        src={getVideoSrc(sizes[currentSizeIndex], videoSrc)}
+        size={sizes[size === 'large' ? 1 : 0]}
+        src={getVideoSrc(size, videoSrc)}
         poster={poster}
         autoPlay={autoPlay}
-        controls={controls}  
-           isPlaying={isPlaying}
+        controls={controls}
+        isPlaying={isPlaying}
         onLoadedData={handleLoadedData}
       />
     </div>
-    );
-  };
-  
-  export default AdaptiveVideoPlayer;
+  )
+}
+
+export default AdaptiveVideoPlayer
