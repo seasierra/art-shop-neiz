@@ -127,6 +127,23 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
           </svg>
         </button>
       )}
+      {isPlaying && (
+        <button
+          className={`${s.controlButton} ${s.pauseButton}`}
+          onClick={() => setIsPlaying(false)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="white"
+            width="24px"
+            height="24px"
+          >
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        </button>
+      )}
 
       <Video
         size={sizes[size === 'large' ? 1 : 0]}
