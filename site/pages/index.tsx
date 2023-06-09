@@ -13,6 +13,7 @@ import range from 'lodash/range'
 import Image from 'next/image'
 import TextSection from '@components/ui/Text/TextSection'
 import ContactForm from '@components/ui/ContactForm'
+import { useState } from 'react'
 
 export async function getStaticProps({
   preview,
@@ -82,10 +83,16 @@ export default function Home({
   products,
   showcases,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [activeVideo, setActiveVideo] = useState(0)
   return (
     <>
       <div className="-mt-16">
-        <AdaptiveVideoPlayer poster="/main.png" videoSrc="media/main_ibrzrf"  autoPlay={true} controls={false} />
+        <AdaptiveVideoPlayer
+          poster="/main.png"
+          videoSrc="/test/main.mp4"
+          autoPlay={true}
+          controls={false}
+        />
       </div>
       {/* <Grid variant="filled">
         {products.slice(0, 3).map((product: any, i: number) => (
@@ -111,6 +118,8 @@ export default function Home({
                 title={caseTitle}
                 slides={slides}
                 category={category}
+                activeVideo={activeVideo} // Pass activeVideo prop
+                setActiveVideo={setActiveVideo} // Pass setActiveVideo prop
               />
             ))}
           </Section.Showcase>

@@ -55,6 +55,8 @@ interface AdaptiveVideoPlayerProps {
   videoSrc: string
   autoPlay: boolean
   controls: boolean
+  activeVideo?: number
+  setActiveVideo?: React.Dispatch<React.SetStateAction<number>>
 }
 
 const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
@@ -63,7 +65,13 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   videoSrc,
   autoPlay,
   controls,
+  activeVideo,
+  setActiveVideo,
 }) => {
+  const generateVideoId = () => {
+    return Math.floor(Math.random() * 1000000)
+  }
+  const [videoId] = useState(generateVideoId)
   const [isReady, setIsReady] = useState(false)
   const isLargeScreen = useMediaQuery({ minWidth: 720 })
   const size = isLargeScreen ? 'large' : 'small'
@@ -71,6 +79,10 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   const [isPlaying, setIsPlaying] = useState(autoPlay)
 
   const handlePlayButtonClick = () => {
+    if (setActiveVideo) {
+      setActiveVideo(videoId)
+    }
+
     setIsPlaying((prevIsPlaying) => !prevIsPlaying)
   }
 
@@ -84,6 +96,12 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   const handleLoadedData = () => {
     // Действия после загрузки видео
   }
+
+  useEffect(() => {
+    if (activeVideo !== videoId) {
+      setIsPlaying(false)
+    }
+  }, [activeVideo, videoId])
 
   useEffect(() => {
     setIsReady(true)
