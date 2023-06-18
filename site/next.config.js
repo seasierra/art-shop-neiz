@@ -1,5 +1,6 @@
 const commerce = require('./commerce.config.json')
 const { withCommerceConfig, getProviderName } = require('./commerce-config')
+const path = require('path')
 
 const provider = commerce.provider || getProviderName()
 const isBC = provider === '@vercel/commerce-bigcommerce'
@@ -48,9 +49,10 @@ module.exports = withCommerceConfig({
         },
     ].filter(Boolean)
   },
-
+  output: 'standalone',
   // Avoid Module not found: ESM packages (supports-color) need to be imported. Use 'import' to reference the package instead. https://nextjs.org/docs/messages/import-esm-externals
   experimental: {
+    outputFileTracingRoot: path.resolve(__dirname, '../../'),
     esmExternals: 'loose',
   },
 })
