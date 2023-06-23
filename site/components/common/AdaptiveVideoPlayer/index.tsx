@@ -36,13 +36,14 @@ const Video: React.FC<VideoProps> = ({
 
   return (
     <video
-      className={`hidden w-full ${s[size]}`}
+      className={`w-full ${autoPlay ? '' : 'max-h-70vh'}   ${s[size]}`}
       autoPlay={autoPlay}
       muted={autoPlay}
       loop
       controls={controls}
       ref={videoRef}
       onLoadedData={onLoadedData}
+      playsInline
     >
       <source src={src} type="video/mp4" />
     </video>
@@ -73,7 +74,8 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   }
   const [videoId] = useState(generateVideoId)
   const [isReady, setIsReady] = useState(false)
-  const isLargeScreen = useMediaQuery({ minWidth: 720 })
+  //const isLargeScreen = useMediaQuery({ minWidth: 720 })
+  const isLargeScreen = useMediaQuery({ minWidth: 30 })
   const size = isLargeScreen ? 'large' : 'small'
 
   const [isPlaying, setIsPlaying] = useState(autoPlay)

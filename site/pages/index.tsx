@@ -89,7 +89,7 @@ export default function Home({
       <div className="-mt-16">
         <AdaptiveVideoPlayer
           poster="/main.png"
-          videoSrc="/test/main.mp4"
+          videoSrc="https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/neiz/offline/Bali13/video13min.mp4"
           autoPlay={true}
           controls={false}
         />

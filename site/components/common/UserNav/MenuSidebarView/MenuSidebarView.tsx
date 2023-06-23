@@ -78,7 +78,7 @@ export default function MenuSidebarView({
         <nav>
           <ul>
             <li className={s.item} onClick={() => closeSidebar()}>
-              <Link href="/search">catalog</Link>
+              <Link href="/search">shop</Link>
             </li>
             <li className={s.item}>
               <h4>works</h4>

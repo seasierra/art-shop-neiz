@@ -13,7 +13,7 @@ export default function Menu() {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <Link className="nav-link text-current" href="/search">
-                  catalog
+                  shop
                 </Link>
               </li>
               <li className="nav-item  dropdown">

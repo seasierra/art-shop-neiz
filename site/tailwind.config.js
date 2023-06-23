@@ -9,6 +9,9 @@ module.exports = {
       maxWidth: {
         '8xl': '1920px',
       },
+      maxHeight: {
+        '70vh': '70vh',
+      },
       colors: {
         primary: 'var(--primary)',
         'primary-2': 'var(--primary-2)',

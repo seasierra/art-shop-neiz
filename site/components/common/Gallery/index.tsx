@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import AdaptiveVideoPlayer from '../AdaptiveVideoPlayer'
 import { lazyload } from '@cloudinary/react'
 
-SwiperCore.use([Pagination, Navigation])
+SwiperCore.use([Pagination, Navigation, Lazy])
 
 interface GalleryProps {
   id?: number
@@ -56,12 +56,14 @@ const OptimizedCldImage = ({
     />
     */
     <Image
+      loading="eager"
       src={optimizedSrc}
       alt={alt}
       width={width}
       height={height}
-      placeholder="blur"
-      blurDataURL={blurDataURL}
+      //  placeholder="blur"
+      // blurDataURL={optimizedSrc}
+      className="flex justify-center items-center"
     />
   )
 }
@@ -106,7 +108,7 @@ export default function Gallery({
           navigation={true}
           loop={true}
           autoHeight={true} // добавить это
-          style={{ height: isVideo ? '500px' : 'auto' }}
+          style={{ height: isVideo ? '100%' : 'auto' }}
           onSlideChange={handleSlideChange}
           onSlideChangeTransitionStart={(swiper) => {
             setIsVideo(slides[swiper.realIndex].assetName.includes('video'))
@@ -115,20 +117,10 @@ export default function Gallery({
           {slides.map(({ assetName, size, blurDataUrl, alt }, idx) => (
             <SwiperSlide key={idx}>
               {/* Preload the next slide */}
-              {idx === nextSlide && (
-                <OptimizedCldImage
-                  alt={slides[nextSlide].alt}
-                  src={slides[nextSlide].assetName}
-                  width={slides[nextSlide].size[0]}
-                  height={slides[nextSlide].size[1]}
-                  placeholder="blur"
-                  blurDataURL={slides[nextSlide].blurDataUrl}
-                />
-              )}
 
               {/* Render the current slide */}
               <a
-                className="relative block h-full w-full"
+                className="relative  h-full w-full flex justify-center items-center"
                 // href={require(`@assets/image/${id}/${idx}.jpg`).default}
                 data-gallery={galleryId}
                 onClick={(event) => {
