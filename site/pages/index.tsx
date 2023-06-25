@@ -6,7 +6,7 @@ import { Grid, Marquee, Hero, Container } from '@components/ui'
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Section from '@components/ui/Section'
 import uploads from '@lib/uploads'
-import Gallery from '@components/common/Gallery'
+//import Gallery from '@components/common/Gallery'
 import generateBlurPlaceholder from '@lib/uploads/generateBlurPlaceholder'
 import AdaptiveVideoPlayer from '@components/common/AdaptiveVideoPlayer'
 import range from 'lodash/range'
@@ -14,7 +14,12 @@ import Image from 'next/image'
 import TextSection from '@components/ui/Text/TextSection'
 import ContactForm from '@components/ui/ContactForm'
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
+const Gallery = dynamic(() => import('@components/common/Gallery'))
 
+const LazyGallery = dynamic(() => import('@components/common/Gallery'), {
+  ssr: false,
+})
 export async function getStaticProps({
   preview,
   locale,
@@ -84,12 +89,14 @@ export default function Home({
   showcases,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [activeVideo, setActiveVideo] = useState(0)
+
   return (
     <>
       <div className="-mt-16">
         <AdaptiveVideoPlayer
           poster="/main.png"
-          videoSrc="https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/neiz/offline/Bali13/video13min.mp4"
+          // videoSrc="https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/mainResized.mp4"
+          videoSrc="https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/videoT.mp4"
           autoPlay={true}
           controls={false}
         />
@@ -113,7 +120,7 @@ export default function Home({
         {showcases.map(({ category, cases }) => (
           <Section.Showcase key={category} title={category}>
             {cases.map(({ caseTitle, slides }) => (
-              <Gallery
+              <LazyGallery
                 key={caseTitle}
                 title={caseTitle}
                 slides={slides}
