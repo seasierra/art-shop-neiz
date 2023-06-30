@@ -13,9 +13,9 @@ import range from 'lodash/range'
 import Image from 'next/image'
 import TextSection from '@components/ui/Text/TextSection'
 import ContactForm from '@components/ui/ContactForm'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-const Gallery = dynamic(() => import('@components/common/Gallery'))
+//const Gallery = dynamic(() => import('@components/common/Gallery'))
 
 const LazyGallery = dynamic(() => import('@components/common/Gallery'), {
   ssr: false,
@@ -90,6 +90,19 @@ export default function Home({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [activeVideo, setActiveVideo] = useState(0)
 
+  const [currentCaseIndex, setCurrentCaseIndex] = useState(1)
+
+  useEffect(() => {
+    const loadNextCase = async () => {
+      if (currentCaseIndex < showcases.length) {
+        await new Promise((resolve) => setTimeout(resolve, 1500)) // Задержка для демонстрационных целей, можно удалить
+        setCurrentCaseIndex((prevIndex) => prevIndex + 1)
+      }
+    }
+
+    loadNextCase()
+  }, [currentCaseIndex, showcases.length])
+
   return (
     <>
       <div className="-mt-16">
@@ -117,7 +130,7 @@ export default function Home({
       </Grid> */}
       <Container>
         <Section.Heading title="works" />
-        {showcases.map(({ category, cases }) => (
+        {showcases.slice(0, currentCaseIndex).map(({ category, cases }) => (
           <Section.Showcase key={category} title={category}>
             {cases.map(({ caseTitle, slides }) => (
               <LazyGallery
@@ -125,8 +138,8 @@ export default function Home({
                 title={caseTitle}
                 slides={slides}
                 category={category}
-                activeVideo={activeVideo} // Pass activeVideo prop
-                setActiveVideo={setActiveVideo} // Pass setActiveVideo prop
+                activeVideo={activeVideo}
+                setActiveVideo={setActiveVideo}
               />
             ))}
           </Section.Showcase>
@@ -140,7 +153,7 @@ export default function Home({
             key={idx}
             width={300}
             height={600}
-            placeholder="blur"
+            // placeholder="blur"
             src={require(`@assets/static/about/${idx + 1}.jpg`)}
             alt={`about-${idx}`}
           />
