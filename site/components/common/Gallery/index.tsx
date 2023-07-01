@@ -1,11 +1,10 @@
 import SwiperCore, { Pagination, Navigation, Lazy } from 'swiper'
 import 'swiper/swiper-bundle.css'
 import { Swiper, SwiperSlide } from 'swiper/react'
-//import { CldImage } from 'next-cloudinary';
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import AdaptiveVideoPlayer from '../AdaptiveVideoPlayer'
 import { lazyload } from '@cloudinary/react'
+import Image from 'next/image'
 
 SwiperCore.use([Pagination, Navigation, Lazy])
 
@@ -43,26 +42,12 @@ const OptimizedCldImage = ({
   const optimizedSrc = src.replace('/upload/', '/upload/q_auto,f_auto/')
 
   return (
-    /*
-    <CldImage
-      alt={alt}
-      src={optimizedSrc}
-      width={width}
-      height={height}
-      style={{ transform: 'translate3d(0, 0, 0)' }}
-      placeholder={placeholder}
-      blurDataURL={blurDataURL}
-      loading="lazy"
-    />
-    */
     <Image
       loading="eager"
       src={optimizedSrc}
       alt={alt}
       width={width}
       height={height}
-      //  placeholder="blur"
-      // blurDataURL={optimizedSrc}
       className="flex justify-center items-center"
     />
   )
@@ -76,56 +61,69 @@ export default function Gallery({
   activeVideo,
   setActiveVideo,
 }: GalleryProps) {
+  const swiperRef = useRef<any>(null)
   const galleryId = encodeURIComponent(title)
   const [isVideo, setIsVideo] = useState(false)
 
-  //const [loaded, setLoaded] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0)
   const [nextSlide, setNextSlide] = useState(1)
+
+  /*
+  useEffect(() => {
+    const resizeTimeout = setTimeout(() => {
+      if (swiperRef.current && swiperRef.current.swiper) {
+        swiperRef.current.swiper.updateAutoHeight() // Пересчет размеров слайдера
+      }
+    }, 3000) // Установите нужное время задержки
+
+    return () => {
+      clearTimeout(resizeTimeout)
+    }
+  }, [slides])
+  */
 
   useEffect(() => {
     setNextSlide((currentSlide + 1) % slides.length)
   }, [currentSlide, slides.length])
-  /*
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
-*/
-  const lightboxOptions = { selector: '[data-gallery="' + galleryId + '"]' }
 
   const handleSlideChange = (swiper: SwiperCore) => {
     setIsVideo(slides[swiper.realIndex].assetName.includes('video'))
     setCurrentSlide(swiper.realIndex)
   }
 
+  useEffect(() => {
+    setCurrentSlide(0)
+  }, [slides])
+
   return (
     <div className="project item col-md-7 mx-auto mb-6 mb-md-9 offline">
       <div className="post-slider mb-3 mb-md-4">
         <Swiper
+          style={{
+            minHeight: '100%',
+            height: isVideo ? '100%' : 'auto',
+          }}
+          ref={swiperRef}
+          observer={true}
+          observeParents={true}
           slidesPerView={1}
           spaceBetween={5}
           pagination={{ clickable: true }}
-          navigation={true}
           loop={true}
-          autoHeight={true} // добавить это
-          style={{ height: isVideo ? '100%' : 'auto' }}
+          autoHeight={true}
           onSlideChange={handleSlideChange}
           onSlideChangeTransitionStart={(swiper) => {
             setIsVideo(slides[swiper.realIndex].assetName.includes('video'))
           }}
+          // Обработчик события imagesLoaded
         >
           {slides.map(({ assetName, size, blurDataUrl, alt }, idx) => (
             <SwiperSlide key={idx}>
-              {/* Preload the next slide */}
-
-              {/* Render the current slide */}
               <a
-                className="relative  h-full w-full flex justify-center items-center"
-                // href={require(`@assets/image/${id}/${idx}.jpg`).default}
+                className="relative h-full w-full flex justify-center items-center"
                 data-gallery={galleryId}
                 onClick={(event) => {
                   event.preventDefault()
-                  // Open lightbox
                 }}
               >
                 {assetName.includes('mp4') ? (

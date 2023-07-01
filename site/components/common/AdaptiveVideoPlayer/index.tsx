@@ -22,6 +22,7 @@ const Video: React.FC<VideoProps> = ({
   onLoadedData,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const posterUrl = src.replace('.mp4', '_poster.jpg')
 
   useEffect(() => {
     const video = videoRef.current
@@ -44,6 +45,8 @@ const Video: React.FC<VideoProps> = ({
       ref={videoRef}
       onLoadedData={onLoadedData}
       playsInline
+      preload="metadata"
+      poster={posterUrl}
     >
       <source src={src} type="video/mp4" />
     </video>
@@ -75,7 +78,7 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   const [videoId] = useState(generateVideoId)
   const [isReady, setIsReady] = useState(false)
   //const isLargeScreen = useMediaQuery({ minWidth: 720 })
-  const isLargeScreen = useMediaQuery({ minWidth: 30 })
+  const isLargeScreen = useMediaQuery({ minWidth: 0 })
   const size = isLargeScreen ? 'large' : 'small'
 
   const [isPlaying, setIsPlaying] = useState(autoPlay)
@@ -90,7 +93,7 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
 
   const getVideoSrc = (size: 'small' | 'large', videoSrc: string) => {
     if (size === 'small') {
-      return videoSrc.replace('.mp4', '-small.mp4')
+      // return videoSrc.replace('.mp4', '-small.mp4')
     }
     return videoSrc
   }
