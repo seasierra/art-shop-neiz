@@ -156,6 +156,7 @@ export default function Home({
             // placeholder="blur"
             src={require(`@assets/static/about/${idx + 1}.jpg`)}
             alt={`about-${idx}`}
+            priority={true}
           />
         ))}
       </Marquee>

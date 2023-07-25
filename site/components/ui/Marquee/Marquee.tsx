@@ -24,7 +24,7 @@ const Marquee: FC<MarqueeProps> = ({
   )
 
   return (
-    <FastMarquee gradient={false} className={rootClassName}>
+    <FastMarquee autoFill={true} gradient={false} className={rootClassName}>
       {Children.map(children, (child) => ({
         ...child,
         props: {

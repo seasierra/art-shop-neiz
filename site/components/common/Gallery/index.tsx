@@ -87,6 +87,7 @@ export default function Gallery({
   }, [currentSlide, slides.length])
 
   const handleSlideChange = (swiper: SwiperCore) => {
+    setActiveVideo(0)
     setIsVideo(slides[swiper.realIndex].assetName.includes('video'))
     setCurrentSlide(swiper.realIndex)
   }
