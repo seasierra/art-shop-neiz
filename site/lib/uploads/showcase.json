@@ -77,12 +77,12 @@
         "case": "Center of two (acrylic, spray)",
         "slides": [
           [
-            "https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/neiz/offline/Center19/video19.mp4",
-            [1627, 962]
-          ],
-          [
             "https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/neiz/offline/Center19/1.jpg",
             [1440, 1800]
+          ],
+          [
+            "https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/neiz/offline/Center19/video19.mp4",
+            [1627, 962]
           ]
         ]
       },
@@ -494,10 +494,6 @@
           [
             "https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/neiz/clothes/clothes25/5.jpg",
             [3024, 3779]
-          ],
-          [
-            "https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/neiz/clothes/clothes25/6.jpg",
-            [959, 1280]
           ],
           [
             "https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/neiz/clothes/clothes25/7.jpg",

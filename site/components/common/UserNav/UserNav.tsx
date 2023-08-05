@@ -36,6 +36,9 @@ const UserNav: React.FC<{
       <ul className={s.list}>
         {process.env.COMMERCE_CART_ENABLED && (
           <li className={s.item}>
+            {/*
+
+
             <Button
               className={s.item}
               variant="naked"
@@ -53,6 +56,7 @@ const UserNav: React.FC<{
                 <span className={s.bagCount}>{itemsCount}</span>
               )}
             </Button>
+              */}
           </li>
         )}
         {process.env.COMMERCE_WISHLIST_ENABLED && (

@@ -4,7 +4,7 @@ const Showcase: React.FC<{
 }> = ({ title, children }) => {
   return (
     <section className="wrapper bg-black text-white">
-      <div className="row" id="offline">
+      <div className="row" id={title.toLowerCase().replace(/\s+/g, '')}>
         <div className="col-12 text-center">
           <h3 className="display-4 mb-2">{title}</h3>
         </div>
@@ -16,7 +16,7 @@ const Showcase: React.FC<{
 
 const Heading: React.FC<{ title: string }> = ({ title }) => (
   <div className="container pt-10 pt-md-14 bg-black">
-    <div className="row">
+    <div className="row" id={title.toLowerCase().replace(/\s+/g, '')}>
       <div className="col-12">
         <h2 className="display-1 mb-3">{title}</h2>
       </div>

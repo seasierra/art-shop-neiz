@@ -77,17 +77,23 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   }
   const [videoId] = useState(generateVideoId)
   const [isReady, setIsReady] = useState(false)
-  //const isLargeScreen = useMediaQuery({ minWidth: 720 })
   const isLargeScreen = useMediaQuery({ minWidth: 0 })
   const size = isLargeScreen ? 'large' : 'small'
 
   const [isPlaying, setIsPlaying] = useState(autoPlay)
+  //const [videoStarted, setVideoStarted] = useState(false)
 
   const handlePlayButtonClick = () => {
+    console.log('Кнопка нажата')
     if (setActiveVideo) {
       setActiveVideo(videoId)
     }
 
+    setIsPlaying((prevIsPlaying) => !prevIsPlaying)
+    // setVideoStarted(true)
+  }
+
+  const handleVideoClick = () => {
     setIsPlaying((prevIsPlaying) => !prevIsPlaying)
   }
 
@@ -117,9 +123,9 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
   }
 
   return (
-    <div className="">
+    <div className="" onClick={handlePlayButtonClick}>
       {!autoPlay && !isPlaying && (
-        <button className={s.button} onClick={handlePlayButtonClick}>
+        <button className={s.button}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -129,23 +135,6 @@ const AdaptiveVideoPlayer: React.FC<AdaptiveVideoPlayerProps> = ({
           >
             <path d="M0 0h24v24H0V0z" fill="none" />
             <path d="M8 5v14l11-7L8 5z" />
-          </svg>
-        </button>
-      )}
-      {isPlaying && (
-        <button
-          className={`${s.controlButton} ${s.pauseButton}`}
-          onClick={() => setIsPlaying(false)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="white"
-            width="24px"
-            height="24px"
-          >
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
           </svg>
         </button>
       )}

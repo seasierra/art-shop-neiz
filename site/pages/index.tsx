@@ -109,7 +109,7 @@ export default function Home({
         <AdaptiveVideoPlayer
           poster="/main.png"
           // videoSrc="https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/mainResized.mp4"
-          videoSrc="https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/videoT.mp4"
+          videoSrc="https://pub-7c193df2053b4620b5c84000089210ff.r2.dev/main2.mp4"
           autoPlay={true}
           controls={false}
         />
@@ -165,20 +165,16 @@ export default function Home({
           Neiz.vesten is an international artist and professional tattooist, and
           one of the founders of the neosymbolism subgenre. He connects the past
           and future to the present with the help of new symbols, ancient ways
-          of tattooing, neural networks, NFTs, sculptures, and canvases. His
-          name in Russian – неизвестен – translates to ‘unknown artist’.
+          of tattooing, neural networks, sculptures, and canvases.
         </p>
         <p>
           Neiz draws inspiration from sounds, colors, emotions, physiology,
-          psychology, science, mythology, mysticism, and more to create unique
-          symbols that transcend time and place. His work is reminiscent of
-          Wassily Kandinsky and Johannesburg Itten, but Neiz gives his own
-          alternative application and vision.
+          psychology, science, mythology, and more to create unique symbols that
+          transcend time and place.
         </p>
         <p>
           Neiz has been developing his alternative vision of symbols and their
-          creation for more than 10 years. Dubbed the ‘key keeper’, people turn
-          to him for unique sacred keys and symbols.
+          creation for more than 10 years.
         </p>
         <p>Neiz has collaborated extensively with major brands including:</p>
         <ul className="unordered-list bullet-primary">
@@ -188,19 +184,8 @@ export default function Home({
             California (Music festival)
           </li>
           <li>ART WATCH - Mechanical art watch company from New York</li>
-          <li>AMPERSOUND - Music audio system</li>
+          <li>AMPERSOUND - Music audio system.</li>
         </ul>
-        <p>
-          As a tattoo artist, Neiz has taken part in collaborations with INKBOX,
-          Miami Tattoos, and more. He is currently sponsored by Balm Tattoo
-          (worldwide).
-        </p>
-        <p className="fst-italic fs-17">
-          “I see how the space in which we live speaks to me, and what I do
-          comes from the future.”
-          <br />
-          <span className="fst-normal">- Neiz</span>
-        </p>
       </TextSection>
       <Section.Heading title="contact" />
       <section className="wrapper bg-black">

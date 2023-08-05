@@ -1,4 +1,5 @@
 import Link from 'next/link'
+
 import cn from 'clsx'
 import s from './MenuSidebarView.module.css'
 import { useUI } from '@components/ui/context'
@@ -84,8 +85,8 @@ export default function MenuSidebarView({
               <h4>works</h4>
               <ul className="ml-4 text-sm">
                 {[
-                  { name: 'offline art', href: '/#offline' },
-                  { name: 'digital art', href: '/#digital' },
+                  { name: 'offline art', href: '/#offlineart' },
+                  { name: 'digital art', href: '/#digitalart' },
                   { name: 'clothes', href: '/#clothes' },
                   { name: 'collaborations', href: '/#collaborations' },
                   { name: 'tattoos', href: '/#tattoos' },

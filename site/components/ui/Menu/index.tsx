@@ -11,11 +11,13 @@ export default function Menu() {
         >
           <div className="offcanvas-body ms-lg-auto d-flex flex-column h-100">
             <ul className="navbar-nav">
+              {/*
               <li className="nav-item">
                 <Link className="nav-link text-current" href="/search">
                   shop
                 </Link>
               </li>
+  */}
               <li className="nav-item  dropdown">
                 <a
                   className="nav-link text-current dropdown-toggle active show"
@@ -26,8 +28,8 @@ export default function Menu() {
                 </a>
                 <ul className="dropdown-menu active show">
                   {[
-                    { name: 'offline art', href: '/#offline' },
-                    { name: 'digital art', href: '/#digital' },
+                    { name: 'offline art', href: '/#offlineart' },
+                    { name: 'digital art', href: '/#digitalart' },
                     { name: 'clothes', href: '/#clothes' },
                     { name: 'collaborations', href: '/#collaborations' },
                     { name: 'tattoos', href: '/#tattoos' },
