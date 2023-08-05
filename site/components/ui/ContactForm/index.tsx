@@ -1,10 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 function ContactForm() {
-  const handleSubmit = (event: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  })
+
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const handleChange = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }))
+  }
+
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault()
-    const form = event.target
-    // handle form submission
+
+    try {
+      const response = await axios.post('/api/test', formData)
+      console.log(response.data) // Optional: Process the response from the server
+      // Add code here to handle a successful response, if needed
+      setIsSubmitted(true) // Set the form submission status to true
+      setFormData({
+        name: '',
+        email: '',
+        message: '',
+      })
+    } catch (error) {
+      console.error('Error submitting the form:', error)
+      // Add code here to handle errors, if needed
+    }
   }
 
   return (
@@ -13,6 +43,14 @@ function ContactForm() {
       onSubmit={handleSubmit}
       noValidate
     >
+      <div
+        style={{
+          transition: 'opacity 0.5s ease-in-out',
+          opacity: isSubmitted ? 1 : 0,
+        }}
+      >
+        Form submitted successfully!
+      </div>
       <div className="messages"></div>
       <div className="row gx-4">
         <div className="col-md-6">
@@ -23,6 +61,8 @@ function ContactForm() {
               name="name"
               className="form-control rounded-0"
               placeholder="Your name"
+              value={formData.name}
+              onChange={handleChange}
             />
             <label htmlFor="form_name">Your name</label>
             <div className="valid-feedback"></div>
@@ -38,6 +78,8 @@ function ContactForm() {
               className="form-control rounded-0"
               placeholder="yourmail@gmail.com"
               required
+              value={formData.email}
+              onChange={handleChange}
             />
             <label htmlFor="form_email">Email*</label>
             <div className="valid-feedback"></div>
@@ -53,6 +95,8 @@ function ContactForm() {
               placeholder="Your message"
               style={{ height: '150px' }}
               required
+              value={formData.message}
+              onChange={handleChange}
             ></textarea>
             <label htmlFor="form_message">Message*</label>
             <div className="valid-feedback"></div>
