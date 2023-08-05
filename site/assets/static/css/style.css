@@ -35860,7 +35860,11 @@ img.svg-inject {
 .counter-wrapper .icon-bg {
   margin: 0 auto;
 }
-html,
+html {
+  --scroll-behavior: smooth !important;
+  scroll-behavior: smooth !important;
+}
+,
 body {
   height: 100%;
 }
