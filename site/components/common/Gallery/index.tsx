@@ -1,3 +1,4 @@
+// Gallery.tsx
 import SwiperCore, { Pagination, Navigation, Lazy } from 'swiper'
 import 'swiper/swiper-bundle.css'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -29,6 +30,7 @@ interface OptimizedCldImageProps {
   alt: string
   placeholder?: string
   blurDataURL?: string
+  eagerLoading?: boolean // Добавляем eagerLoading пропс
 }
 
 const OptimizedCldImage = ({
@@ -38,12 +40,13 @@ const OptimizedCldImage = ({
   alt,
   placeholder,
   blurDataURL,
-}: any) => {
+  eagerLoading,
+}: OptimizedCldImageProps) => {
   const optimizedSrc = src.replace('/upload/', '/upload/q_auto,f_auto/')
 
   return (
     <Image
-      loading="eager"
+      loading={eagerLoading ? 'eager' : 'lazy'} // Здесь меняем значение loading в зависимости от eagerLoading
       src={optimizedSrc}
       alt={alt}
       width={width}
@@ -64,23 +67,8 @@ export default function Gallery({
   const swiperRef = useRef<any>(null)
   const galleryId = encodeURIComponent(title)
   const [isVideo, setIsVideo] = useState(false)
-
   const [currentSlide, setCurrentSlide] = useState(0)
   const [nextSlide, setNextSlide] = useState(1)
-
-  /*
-  useEffect(() => {
-    const resizeTimeout = setTimeout(() => {
-      if (swiperRef.current && swiperRef.current.swiper) {
-        swiperRef.current.swiper.updateAutoHeight() // Пересчет размеров слайдера
-      }
-    }, 3000) // Установите нужное время задержки
-
-    return () => {
-      clearTimeout(resizeTimeout)
-    }
-  }, [slides])
-  */
 
   useEffect(() => {
     setNextSlide((currentSlide + 1) % slides.length)
@@ -96,14 +84,17 @@ export default function Gallery({
     setCurrentSlide(0)
   }, [slides])
 
+  const swiperStyles = {
+    minHeight: '100%',
+    height: isVideo ? '100%' : 'auto',
+    transition: 'height 0.7s ease', // Анимация изменения высоты
+  }
+
   return (
     <div className="project item col-md-7 mx-auto mb-6 mb-md-9 offline">
       <div className="post-slider mb-3 mb-md-4">
         <Swiper
-          style={{
-            minHeight: '100%',
-            height: isVideo ? '100%' : 'auto',
-          }}
+          style={swiperStyles} // Используем инлайн стили
           ref={swiperRef}
           observer={true}
           observeParents={true}
@@ -116,7 +107,6 @@ export default function Gallery({
           onSlideChangeTransitionStart={(swiper) => {
             setIsVideo(slides[swiper.realIndex].assetName.includes('video'))
           }}
-          // Обработчик события imagesLoaded
         >
           {slides.map(({ assetName, size, blurDataUrl, alt }, idx) => (
             <SwiperSlide key={idx}>
@@ -144,6 +134,7 @@ export default function Gallery({
                     height={size[1]}
                     placeholder="blur"
                     blurDataURL={blurDataUrl}
+                    eagerLoading={idx === nextSlide} // Передаем eagerLoading пропс
                   />
                 )}
               </a>
