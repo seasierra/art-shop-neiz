@@ -7,7 +7,7 @@ import AdaptiveVideoPlayer from '../AdaptiveVideoPlayer'
 import { lazyload } from '@cloudinary/react'
 import Image from 'next/image'
 
-SwiperCore.use([Pagination, Navigation, Lazy])
+SwiperCore.use([Pagination, Navigation, Lazy, Swiper])
 
 interface GalleryProps {
   id?: number
@@ -46,11 +46,12 @@ const OptimizedCldImage = ({
 
   return (
     <Image
+      unoptimized
       loading={eagerLoading ? 'eager' : 'lazy'} // Здесь меняем значение loading в зависимости от eagerLoading
       src={optimizedSrc}
       alt={alt}
       width={width}
-      height={height}
+      //height={height}
       className="flex justify-center items-center"
     />
   )
@@ -75,6 +76,7 @@ export default function Gallery({
   }, [currentSlide, slides.length])
 
   const handleSlideChange = (swiper: SwiperCore) => {
+    swiper.updateAutoHeight(800)
     setActiveVideo(0)
     setIsVideo(slides[swiper.realIndex].assetName.includes('video'))
     setCurrentSlide(swiper.realIndex)
@@ -84,16 +86,45 @@ export default function Gallery({
     setCurrentSlide(0)
   }, [slides])
 
-  const swiperStyles = {
+  const swiperStyles: React.CSSProperties = {
     minHeight: '100%',
     height: isVideo ? '100%' : 'auto',
-    transition: 'height 0.7s ease', // Анимация изменения высоты
+    WebkitTransformStyle: 'preserve-3d',
+    WebkitTransform: 'translateZ(0)',
+    transform: 'translateZ(0)',
+  }
+
+  const swiperStyles3: React.CSSProperties = {
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // minHeight: '100%',
+    //  minHeight: '100%',
+    // height: isVideo ? '100%' : 'auto',
+    WebkitBackfaceVisibility: 'hidden',
+    WebkitTransform: 'translateZ(0)',
+    transform: 'translateZ(0)',
+    // transition: 'height 0.7s ease',
+  }
+
+  const swiperSlideStylesMobile: React.CSSProperties = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '100%',
+    //  minHeight: '100%',
+    // height: isVideo ? '100%' : 'auto',
+    WebkitBackfaceVisibility: 'hidden',
+    WebkitTransform: 'translateZ(0)',
+    transform: 'translateZ(0)',
+    // transition: 'height 0.7s ease',
   }
 
   return (
     <div className="project item col-md-7 mx-auto mb-6 mb-md-9 offline">
       <div className="post-slider mb-3 mb-md-4">
         <Swiper
+          maxBackfaceHiddenSlides={2}
           style={swiperStyles} // Используем инлайн стили
           ref={swiperRef}
           observer={true}
@@ -101,15 +132,22 @@ export default function Gallery({
           slidesPerView={1}
           spaceBetween={5}
           pagination={{ clickable: true }}
-          loop={true}
+          //loop={true}
           autoHeight={true}
           onSlideChange={handleSlideChange}
-          onSlideChangeTransitionStart={(swiper) => {
-            setIsVideo(slides[swiper.realIndex].assetName.includes('video'))
-          }}
+          //</div> onSlideChangeTransitionStart={(swiper) => {
+          // setIsVideo(slides[swiper.realIndex].assetName.includes('video'))
+          //   }}
         >
           {slides.map(({ assetName, size, blurDataUrl, alt }, idx) => (
-            <SwiperSlide key={idx}>
+            <SwiperSlide
+              style={
+                window.innerWidth <= 768
+                  ? swiperSlideStylesMobile
+                  : swiperStyles3
+              }
+              key={idx}
+            >
               <a
                 className="relative h-full w-full flex justify-center items-center"
                 data-gallery={galleryId}
